@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="card col-md-6 offset-md-3 offset-md-3">
+      <div class="row">
+          <h3 class="text-center"> Criar Empresa </h3>
+          <hr />
+          <div class="card-body">
+              <form (ngSubmit)="onSubmit()">
+
+                  <div class="form-group">
+                      <label> Nome da Empresa</label>
+                      <input type="text" class="form-control" id="name" [(ngModel)]="company.name"
+                          name="name">
+                  </div>
+
+                  <div class="form-group">
+                      <label> CNPJ </label>
+                      <input type="text" class="form-control" id="cnpj" [(ngModel)]="company.cnpj"
+                          name="cnpj">
+                  </div>
+
+                  <br />
+                  <button class="btn btn-success" type="submit">Enviar</button>
+
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
