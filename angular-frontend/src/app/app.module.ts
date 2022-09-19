@@ -20,8 +20,6 @@ import { UpdateEmployeeComponent } from './update-employee/update-employee.compo
 
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

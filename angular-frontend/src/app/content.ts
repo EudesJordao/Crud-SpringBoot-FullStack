@@ -2,7 +2,7 @@ import { Company } from './company';
 import { Sort } from './sort';
 import { Pageable } from './pageable';
 export class Content{
-  content: Company;
+  content: Company[];
   empty: boolean;
   first: boolean;
   last: boolean;

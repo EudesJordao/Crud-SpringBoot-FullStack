@@ -14,10 +14,9 @@ import net.javaguides.springboot.model.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
-
-    @Query(value = "SELECT C FROM Company C WHERE C.name LIKE '%:name%' or C.cnpj LIKE '%:name%'")
+    @Query(value = "SELECT C FROM Company C WHERE LOWER(C.name) LIKE LOWER(concat('%', concat(:name, '%'))) OR LOWER(C.cnpj) LIKE LOWER(concat('%', concat(:name, '%')))")
     Page<Company> search(
-        @Param("name") String name,
+        @Param("name") String name, 
         Pageable pageable);
-        
+
 }

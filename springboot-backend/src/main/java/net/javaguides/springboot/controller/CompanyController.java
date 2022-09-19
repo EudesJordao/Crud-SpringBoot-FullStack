@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
 import net.javaguides.springboot.Service.CompanyService;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Company;
@@ -40,23 +42,10 @@ public class CompanyController {
     // get all companys
     @GetMapping("/companys")
     public Page<Company> search(
-        @RequestParam("name") String name,
-        @RequestParam(
-            value = "page",
-            required = false,
-            defaultValue = "0") int page,
-        @RequestParam(
-            value = "size",
-            required = false,
-            defaultValue = "10") int size) {
-    return service.search(name, page, size);      
+        @RequestParam(required = false) String name,
+        Pageable page) {
+          return service.search(name, page);
     }
-
-    @GetMapping
-    public Page<Company> getAll() {
-        return service.findAll();
-    }
-
 
     // creat company rest api
     @PostMapping("/companys")

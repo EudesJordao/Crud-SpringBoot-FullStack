@@ -2,8 +2,8 @@ import { Content } from './../content';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Company } from './../company';
 import { CompanyService } from './../company.service';
+import { Company } from '../company';
 
 
 @Component({
@@ -14,7 +14,8 @@ import { CompanyService } from './../company.service';
 export class CompanyListComponent implements OnInit {
 
   contents: Content[];
-  totalLength: any;
+
+
   page: number = 0;
   nameParm: string;
 
@@ -30,8 +31,7 @@ export class CompanyListComponent implements OnInit {
   private getCompany(){
     this.companyService.getCompanyList(this.nameParm).subscribe(data => {
       this.contents = data;
-
-      this.totalLength = data.length;
+       console.log(data);
     },
     error => alert("Erro ao preencher os campos"))
   }
