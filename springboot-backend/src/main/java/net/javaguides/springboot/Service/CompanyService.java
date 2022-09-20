@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 import net.javaguides.springboot.model.Company;
 import net.javaguides.springboot.repository.CompanyRepository;
 
@@ -14,11 +15,12 @@ public class CompanyService {
     @Autowired
     CompanyRepository repository;
 
+
     public Page<Company> search(
             String name,
             Pageable page) {
                 try {
-                    if(name == null){
+                        if(name == null){
                         return repository.findAll(page);
                     }else {
                         return repository.search(name, page);

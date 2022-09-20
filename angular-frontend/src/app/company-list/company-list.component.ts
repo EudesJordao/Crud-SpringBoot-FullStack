@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CompanyService } from './../company.service';
-import { Company } from '../company';
+
 
 
 @Component({
@@ -13,11 +13,11 @@ import { Company } from '../company';
 })
 export class CompanyListComponent implements OnInit {
 
-  contents: Content[];
+  contents: Content;
 
 
   page: number = 0;
-  nameParm: string;
+  nameParm: string = '';
 
 
   constructor(private companyService: CompanyService,

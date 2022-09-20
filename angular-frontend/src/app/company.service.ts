@@ -13,10 +13,10 @@ export class CompanyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCompanyList(name: string): Observable<Content[]>{
+  getCompanyList(name: string): Observable<Content>{
     let params = new HttpParams()
     .set('name', name);
-    return this.httpClient.get<Content[]>(`${this.companyURL}`,{params: params});
+    return this.httpClient.get<Content>(`${this.companyURL}`,{params: params});
   }
 
   createCompany(company: Company): Observable<Object>{

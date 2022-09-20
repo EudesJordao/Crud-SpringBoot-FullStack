@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +22,9 @@ import lombok.NoArgsConstructor;
 public class Company {
     
     @Id
-    @Column(length = 14, nullable = false, unique = true, name = "cnpj")
+    //@Column(length = 14, nullable = false, unique = true, name = "cnpj")
+    @NotBlank(message = "O nome é obrigatório")
+    @Length(min = 3, max = 35, message = "O nome deverá ter no máximo {max} caracteres")
     private long cnpj;
 
 
