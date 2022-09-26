@@ -1,12 +1,18 @@
 package net.javaguides.springboot.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CNPJ;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,33 +28,22 @@ import lombok.NoArgsConstructor;
 public class Company {
     
     @Id
-    //@Column(length = 14, nullable = false, unique = true, name = "cnpj")
-    @NotBlank(message = "O nome é obrigatório")
-    @Length(min = 3, max = 35, message = "O nome deverá ter no máximo {max} caracteres")
-    private long cnpj;
+    @Column(length = 14, nullable = false, name = "cnpj", unique = true)
+    @CNPJ
+    private String cnpj;
 
 
     @Column(name = "name")
     @NotBlank(message = "O nome não pode ser vazio")
+    @Size(max = 25)
     private String name;
 
+    @OneToMany(mappedBy = "company")
+    private List<Employee> employees;
 
-    public Company(String name, long cnpj){
-        super();
-        this.name = name;
-        this.cnpj = cnpj;
+    @JsonManagedReference
+    public List<Employee> getEmployees(){
+        return employees;
     }
 
-    public long getCnpj() {
-        return cnpj;
-    }
-    public void setCnpj(long cnpj){
-       this.cnpj = cnpj; 
-    }
-    public String getName(){
-        return name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
 }

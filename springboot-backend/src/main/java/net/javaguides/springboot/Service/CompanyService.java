@@ -20,7 +20,7 @@ public class CompanyService {
             String name,
             Pageable page) {
                 try {
-                        if(name == null){
+                    if(name == null){
                         return repository.findAll(page);
                     }else {
                         return repository.search(name, page);

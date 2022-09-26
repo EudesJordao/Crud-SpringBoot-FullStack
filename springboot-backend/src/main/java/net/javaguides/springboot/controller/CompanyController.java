@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
 import net.javaguides.springboot.Service.CompanyService;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Company;
@@ -50,13 +49,13 @@ public class CompanyController {
 
     // creat company rest api
     @PostMapping("/companys")
-    public Company createCompany(@RequestBody Company company) {
+    public Company createCompany(@RequestBody @Valid Company company) {
         return companyRepository.save(company);
     }
 
     // get company by id rest api
     @GetMapping("/companys/{cnpj}")
-    public ResponseEntity<Company> getCompanyByCnpj(@PathVariable Long cnpj) {
+    public ResponseEntity<Company> getCompanyByCnpj(@PathVariable String cnpj) {
         Company company = companyRepository.findById(cnpj)
         .orElseThrow(() -> new ResourceNotFoundException("Company not exist with cnpj: " + cnpj));
         return ResponseEntity.ok(company);
@@ -64,7 +63,7 @@ public class CompanyController {
 
     // update company rest api
     @PutMapping("/companys/{cnpj}")
-    public ResponseEntity<Company>updateCompany(@PathVariable Long cnpj, @RequestBody Company companyDetails){
+    public ResponseEntity<Company>updateCompany(@PathVariable String cnpj, @RequestBody Company companyDetails){
         Company company = companyRepository.findById(cnpj)
         .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + cnpj));
 
@@ -77,7 +76,7 @@ public class CompanyController {
 
     // delete company rest api
     @DeleteMapping("/companys/{cnpj}")
-    public ResponseEntity<Map<String, Boolean>> deleteCompany(@PathVariable Long cnpj){
+    public ResponseEntity<Map<String, Boolean>> deleteCompany(@PathVariable String cnpj){
         Company company = companyRepository.findById(cnpj)
         .orElseThrow(() -> new ResourceNotFoundException("Company not exist with id :" + cnpj));
 

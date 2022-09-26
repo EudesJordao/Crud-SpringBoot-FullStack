@@ -12,9 +12,15 @@ import org.springframework.stereotype.Repository;
 import net.javaguides.springboot.model.Company;
 
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, String> {
 
-    @Query(value = "SELECT C FROM Company C WHERE LOWER(C.name) LIKE LOWER(concat('%', concat(:name, '%'))) OR LOWER(C.cnpj) LIKE LOWER(concat('%', concat(:name, '%')))")
+    @Query(value = 
+    "SELECT c, COUNT (e) " +
+    "FROM Company c " + 
+    "INNER JOIN Employee e ON e.company = c.cnpj " +
+    "WHERE LOWER(c.name) LIKE LOWER(concat('%', concat(:name, '%'))) " +
+    "OR LOWER(c.cnpj) LIKE LOWER(concat('%', concat(:name, '%'))) " +
+    "GROUP BY c.cnpj, c.name ")
     Page<Company> search(
         @Param("name") String name, 
         Pageable pageable);
