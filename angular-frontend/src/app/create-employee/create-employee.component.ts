@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Company } from '../company';
 
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
-
-
 
 
 @Component({
@@ -19,9 +18,11 @@ export class CreateEmployeeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.employee.company = new Company();
   }
 
   saveEmployee(){
+    console.log(this.employee);
     this.employeeService.createEmployee(this.employee).subscribe( data =>{
       console.log(data);
       this.goToEmployeeList();

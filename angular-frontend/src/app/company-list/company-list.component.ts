@@ -31,7 +31,6 @@ export class CompanyListComponent implements OnInit {
   private getCompany(){
     this.companyService.getCompanyList(this.nameParm).subscribe(data => {
       this.contents = data;
-       console.log(data);
     },
     error => alert("Erro ao preencher os campos"))
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Company } from '../company';
 
 @Component({
   selector: 'app-update-employee',
@@ -17,6 +18,9 @@ export class UpdateEmployeeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+
+    this.employee.company = new Company();
+
     this.id = this.route.snapshot.params['id'];
 
     this.employeeService.getEmployeeById(this.id).subscribe(data => {

@@ -15,9 +15,9 @@ import net.javaguides.springboot.model.Company;
 public interface CompanyRepository extends JpaRepository<Company, String> {
 
     @Query(value = 
-    "SELECT c, COUNT (e) " +
+    "SELECT new net.javaguides.springboot.model.Company(c , COUNT(e)) " +
     "FROM Company c " + 
-    "INNER JOIN Employee e ON e.company = c.cnpj " +
+    "LEFT JOIN Employee e ON e.company = c.cnpj " +
     "WHERE LOWER(c.name) LIKE LOWER(concat('%', concat(:name, '%'))) " +
     "OR LOWER(c.cnpj) LIKE LOWER(concat('%', concat(:name, '%'))) " +
     "GROUP BY c.cnpj, c.name ")

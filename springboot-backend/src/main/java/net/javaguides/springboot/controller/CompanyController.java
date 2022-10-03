@@ -1,11 +1,14 @@
 package net.javaguides.springboot.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.javaguides.springboot.Service.CompanyService;
+import net.javaguides.springboot.dto.CompanyDTO;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Company;
 import net.javaguides.springboot.repository.CompanyRepository;
@@ -37,14 +41,20 @@ public class CompanyController {
 
     @Autowired
     CompanyService service;
+
+    @Autowired
+    private ModelMapper modelMapper; 
    
   
     // get all companys
     @GetMapping("/companys")
-    public Page<Company> search(
+    public List<CompanyDTO> search(
         @RequestParam(required = false) String name,
         Pageable page) {
-          return service.search(name, page);
+          Page<Company> companyPageable = service.search(name, page);
+          List<CompanyDTO> companys = new ArrayList<>(); 
+          companyPageable.getContent().forEach(company -> companys.add(modelMapper.map(company, CompanyDTO.class) ));
+          return companys;
     }
 
     // creat company rest api

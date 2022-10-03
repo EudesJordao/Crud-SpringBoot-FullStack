@@ -30,8 +30,9 @@ public class EmployeeController {
 	
 	// get all employees
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees(){
-		return employeeRepository.findAll();
+	public List<Employee> getAllEmployees() {
+		List<Employee> result = employeeRepository.findAll();
+		return result;
 	}		
 	
 	// create employee rest api
@@ -58,6 +59,8 @@ public class EmployeeController {
 		employee.setFirstName(employeeDetails.getFirstName());
 		employee.setLastName(employeeDetails.getLastName());
 		employee.setEmailId(employeeDetails.getEmailId());
+		
+
 		
 		Employee updatedEmployee = employeeRepository.save(employee);
 		return ResponseEntity.ok(updatedEmployee);

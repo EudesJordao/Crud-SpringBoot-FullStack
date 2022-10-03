@@ -1,5 +1,6 @@
 package net.javaguides.springboot.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,12 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CNPJ;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +25,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "companys")
-public class Company {
+public class Company implements Serializable{
+    
+    private static final long serialVersionUID = 112312312L;
     
     @Id
     @Column(length = 14, nullable = false, name = "cnpj", unique = true)
@@ -41,9 +43,14 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
-    @JsonManagedReference
-    public List<Employee> getEmployees(){
-        return employees;
-    }
+    @Transient
+    private Long quantidade;
 
+    public Company(Company company, Long count){
+        this.name = company.getName();
+        this.cnpj = company.getCnpj();
+
+
+        this.quantidade = count;
+    }
 }

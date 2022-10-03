@@ -1,7 +1,10 @@
 package net.javaguides.springboot.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +27,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @Table(name = "employees")
-public class Employee {
-	
+public class Employee implements Serializable {
+
+	private static final long serialVersionUID = 42123123L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -46,13 +49,9 @@ public class Employee {
 	@NotBlank(message = "Email invalido")
 	private String emailId;
 
-	@ManyToOne
-	@JoinColumn(name = "companyId", nullable = true)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cnpj", nullable = false)
 	private Company company;
-	
-	@JsonBackReference
-	public Company getCompany(){
-		return company;
-	}
-	
+
+
 }

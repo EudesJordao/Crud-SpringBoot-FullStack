@@ -1,5 +1,5 @@
 export class Company {
-  cnpj: number;
+  cnpj: string;
   name: string;
-  employees: string;
+  quantidade: number;
 }
