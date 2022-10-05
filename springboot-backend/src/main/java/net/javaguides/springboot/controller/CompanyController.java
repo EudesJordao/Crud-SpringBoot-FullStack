@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,19 +43,15 @@ public class CompanyController {
     @Autowired
     CompanyService service;
 
-    @Autowired
-    private ModelMapper modelMapper; 
    
   
     // get all companys
     @GetMapping("/companys")
-    public List<CompanyDTO> search(
+    public Page<CompanyDTO> search(
         @RequestParam(required = false) String name,
         Pageable page) {
-          Page<Company> companyPageable = service.search(name, page);
-          List<CompanyDTO> companys = new ArrayList<>(); 
-          companyPageable.getContent().forEach(company -> companys.add(modelMapper.map(company, CompanyDTO.class) ));
-          return companys;
+
+          return service.search(name, page);
     }
 
     // creat company rest api

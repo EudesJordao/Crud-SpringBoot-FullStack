@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.javaguides.springboot.Service.EmployeeService;
+import net.javaguides.springboot.dto.EmployeeDTO;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.repository.EmployeeRepository;
@@ -27,12 +29,15 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	private EmployeeService service;
 	
 	// get all employees
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees() {
-		List<Employee> result = employeeRepository.findAll();
-		return result;
+	public List<EmployeeDTO> getEmployees() {
+		
+		return service.listEmployee();
 	}		
 	
 	// create employee rest api
@@ -59,7 +64,7 @@ public class EmployeeController {
 		employee.setFirstName(employeeDetails.getFirstName());
 		employee.setLastName(employeeDetails.getLastName());
 		employee.setEmailId(employeeDetails.getEmailId());
-		
+		employee.setCompany(employeeDetails.getCompany());
 
 		
 		Employee updatedEmployee = employeeRepository.save(employee);

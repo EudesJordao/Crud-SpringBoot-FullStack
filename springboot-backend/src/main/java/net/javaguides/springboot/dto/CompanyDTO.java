@@ -19,4 +19,6 @@ public class CompanyDTO {
 
     private List<EmployeeDTO> employees; 
 
+    private Long quantidade;
+
 }

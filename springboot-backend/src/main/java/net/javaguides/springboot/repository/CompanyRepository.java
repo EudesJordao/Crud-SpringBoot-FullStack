@@ -23,6 +23,8 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
     "GROUP BY c.cnpj, c.name ")
     Page<Company> search(
         @Param("name") String name, 
-        Pageable pageable);
+        Pageable pageable
+    );
 
+    
 }
