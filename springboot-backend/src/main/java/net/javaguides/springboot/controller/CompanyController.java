@@ -1,6 +1,8 @@
 package net.javaguides.springboot.controller;
 
 
+import java.io.Console;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import net.javaguides.springboot.Service.CompanyService;
 import net.javaguides.springboot.dto.CompanyDTO;
@@ -55,9 +58,22 @@ public class CompanyController {
     }
 
     // creat company rest api
+    // @PostMapping("/companys")
+    // public Company createCompany(@RequestBody @Valid Company company) {
+      
+    //     return companyRepository.save(company);
+    // }
+
     @PostMapping("/companys")
-    public Company createCompany(@RequestBody @Valid Company company) {
-        return companyRepository.save(company);
+    public ResponseEntity<CompanyDTO> create(@RequestBody CompanyDTO companyDTO){
+        Company newObj = service.create(companyDTO);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+        .path("/{cnpj}")
+        .buildAndExpand(newObj.getCnpj())
+        .toUri();    
+        
+        return ResponseEntity.created(uri).build();
     }
 
     // get company by id rest api

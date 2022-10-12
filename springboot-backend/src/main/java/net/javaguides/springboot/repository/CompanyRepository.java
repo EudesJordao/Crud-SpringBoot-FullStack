@@ -26,5 +26,7 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
         Pageable pageable
     );
 
+    @Query("SELECT obj FROM Company obj WHERE obj.cnpj =:cnpj")
+    Company findByCNPJ(@Param("cnpj") String cnpj);
     
 }

@@ -3,6 +3,7 @@ package net.javaguides.springboot.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Company implements Serializable{
     @Size(max = 25)
     private String name;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true , mappedBy = "company")
     private List<Employee> employees;
 
     @Transient
@@ -53,4 +54,6 @@ public class Company implements Serializable{
 
         this.quantidade = count;
     }
+
+
 }

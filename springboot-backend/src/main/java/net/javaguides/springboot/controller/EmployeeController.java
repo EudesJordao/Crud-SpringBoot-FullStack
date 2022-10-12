@@ -36,7 +36,6 @@ public class EmployeeController {
 	// get all employees
 	@GetMapping("/employees")
 	public List<EmployeeDTO> getEmployees() {
-		
 		return service.listEmployee();
 	}		
 	
